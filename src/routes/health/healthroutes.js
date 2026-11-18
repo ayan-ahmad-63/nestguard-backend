@@ -9,6 +9,7 @@ router.get("/", (req, res) => {
         {
             version: "1.0.0",
             uptime: process.uptime(),
+            serverBootTime: global.SERVER_BOOT_TIME || Date.now(),
             timestamp: new Date().toISOString(),
         }
     );

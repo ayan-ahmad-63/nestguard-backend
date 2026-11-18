@@ -6,6 +6,9 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
+    "enroll": "node src/scripts/enroll.js",
+    "gen-token": "node src/scripts/gen-token.js",
+    "zkteco": "powershell -ExecutionPolicy Bypass -File src/scripts/zkteco-live20r-bridge.ps1",
     "lint": "eslint .",
     "format": "prettier --write ."
   },
