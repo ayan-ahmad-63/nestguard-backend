@@ -2,6 +2,7 @@
 
     python -m scripts.seed                       # prompts nothing; reads ADMIN_PASSWORD etc. from env
     ADMIN_PASSWORD=... WARDEN_PASSWORD=... SECURITY_PASSWORD=... python -m scripts.seed
+    (add RESET_PASSWORDS=1 to overwrite the passwords of accounts that already exist)
 
 Passwords are never hard-coded. In ENV=development, missing ones fall back to
 Admin@1234 / Warden@1234 / Security@1234 so the demo accounts keep working.
@@ -30,7 +31,11 @@ async def main() -> None:
         if not password:
             sys.exit(f"Set {env_name} (no default outside development)")
         if await database.db().admins.find_one({"email": email}):
-            print(f"= {email} already exists")
+            if os.environ.get("RESET_PASSWORDS") == "1":
+                await database.db().admins.update_one({"email": email}, {"$set": {"password": hash_password(password)}})
+                print(f"~ {email} password reset")
+            else:
+                print(f"= {email} already exists")
             continue
         await database.db().admins.insert_one({"name": name, "email": email, "password": hash_password(password),
                                                "role": role, "isActive": True, "createdAt": now()})
