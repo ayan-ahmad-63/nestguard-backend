@@ -51,3 +51,10 @@ Adding a feature (e.g. visitors): create `app/modules/visitors/` with a `router`
 
 ## Migrating from the old Node backend
 **Rotate the MongoDB Atlas password and every old secret**: the old `.env` was committed and stays readable in git history.
+
+## CI/CD
+- `.github/workflows/ci.yml`: runs the test suite and a Docker build on every push and pull request.
+- `.github/workflows/release.yml`: on `main`, publishes `ghcr.io/<owner>/nestguard-backend:latest` (and a `sha-` tag).
+- Cloudflare Workers cannot run this API (long-lived Python process + Socket.IO + MongoDB). Run the image on any Docker host
+  (VPS, Render, Railway, Fly.io) and put it behind HTTPS; a Cloudflare Tunnel (`cloudflared`) can expose a machine you own.
+  Set the same `JWT_SECRET` as the frontend, `CLIENT_URL` to the frontend URL, and the other variables from `.env.example`.
