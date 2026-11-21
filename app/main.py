@@ -6,6 +6,7 @@ from contextlib import asynccontextmanager
 import socketio
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from app.core import db as database
@@ -39,7 +40,14 @@ def create_app(settings: Settings | None = None, mongo_client: AsyncIOMotorClien
     register_handlers(api)
 
     @api.get("/api/v1/health-check")
-    async def health():
+    async def health(deep: bool = False):
+        # ?deep=1 also pings MongoDB, so keep-alive checks keep Atlas active and catch DB outages.
+        if deep:
+            try:
+                await database.db().command("ping")
+            except Exception:
+                return JSONResponse(status_code=503, content={"success": False, "statusCode": 503,
+                                                              "message": "Database unreachable", "data": None})
         return ok("NestGuard API is running", {"modules": s.modules})
 
     sio = None
