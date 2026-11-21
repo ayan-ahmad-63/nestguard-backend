@@ -8,7 +8,6 @@ from datetime import datetime
 
 from app.core import events
 from app.core.db import db
-from app.core.responses import ApiError
 from app.core.serialize import fmt_time, now, person
 from app.modules.alerts import service as alerts
 from app.modules.gates import service as gates

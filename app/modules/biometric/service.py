@@ -4,7 +4,7 @@ from app.core import events
 from app.core.db import db
 from app.core.responses import ApiError
 from app.core.security import decrypt_template, encrypt_template, is_real_template
-from app.core.serialize import initials, now, oid, person
+from app.core.serialize import now, oid, person
 from app.modules.access import service as access
 from app.modules.auth import service as auth
 from app.modules.biometric import state

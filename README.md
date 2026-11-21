@@ -50,5 +50,4 @@ Adding a feature (e.g. visitors): create `app/modules/visitors/` with a `router`
 6. Login page > thumb login with an enrolled staff finger; an unenrolled finger must NOT log in.
 
 ## Migrating from the old Node backend
-The Express code is kept in `legacy-node/` for reference (and in git history). Delete it once you are happy.
 **Rotate the MongoDB Atlas password and every old secret**: the old `.env` was committed and stays readable in git history.

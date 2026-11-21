@@ -4,7 +4,6 @@ from pydantic import BaseModel, ConfigDict
 from app.core.config import get_settings
 from app.core.deps import has_service_key, rate_limit, require_roles, service_only, staff_or_service
 from app.core.responses import ApiError, ok
-from app.modules.access import service as access
 from app.modules.biometric import service, state
 from app.modules.students import service as students
 
